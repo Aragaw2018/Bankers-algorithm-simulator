@@ -1,0 +1,223 @@
+/* --- General Reset & Typography --- */
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+header h1 { margin: 0; font-size: 2.4rem; letter-spacing: 1px; }
+header p { margin: 10px 0 0; opacity: 0.8; font-size: 1.1rem; }
+
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+/* --- Card Styles --- */
+.card {
+    background: white;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-top: 5px solid #3498db;
+    transition: transform 0.2s;
+}
+
+.section-title {
+    margin-top: 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #f1f3f5;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+}
+
+/* --- Configuration Section (Step 1) --- */
+.config-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.config-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.config-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* --- Input Field Styles --- */
+input[type="number"] {
+    width: 60px;
+    padding: 10px;
+    border: 2px solid #e0e6ed;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1rem;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+input[type="number"]:focus {
+    border-color: #3498db;
+    outline: none;
+    background-color: #f7fbff;
+}
+
+.dynamic-input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+/* --- Matrix Tables --- */
+.matrix-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.matrix-container section { flex: 1; min-width: 400px; }
+
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+td:first-child {
+    font-weight: bold;
+    color: #3498db;
+    background-color: #fcfdfe;
+}
+
+/* --- Buttons --- */
+.top-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    justify-content: flex-end;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.btn-blue { background-color: #3498db; color: white; }
+.btn-blue:hover { background-color: #2980b9; }
+
+.btn-cyan { background-color: #06b6d4; color: white; }
+.btn-cyan:hover { background-color: #0891b2; }
+
+.btn-gray { background-color: #94a3b8; color: white; }
+.btn-gray:hover { background-color: #64748b; }
+
+#run-btn {
+    width: 100%;
+    background-color: #10b981;
+    color: white;
+    padding: 18px;
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+#run-btn:hover { background-color: #059669; transform: translateY(-2px); }
+
+/* --- Execution Log (Step 5 - terminal style) --- */
+.log-container {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    max-height: 400px;
+    overflow-y: auto;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.log-entry { margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+.log-success { color: #4ade80; font-weight: bold; }
+.log-fail { color: #fb7185; }
+.log-info { color: #60a5fa; }
+
+/* --- Results --- */
+.hidden { display: none; }
+#status-message {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.success { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.danger { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+/* --- Chart --- */
+.chart-wrapper {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+/* --- Footer --- */
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* --- Animations --- */
+.animate-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.hint { font-size: 0.8rem; color: #94a3b8; margin-top: 10px; text-align: center; }

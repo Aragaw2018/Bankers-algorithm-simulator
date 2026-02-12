@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Dynamic Banker's Algorithm Simulator</title>
+    <!-- External CSS Link -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js for Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Banker's Algorithm Simulator</h1>
+        <p>Advanced Resource Allocation & Deadlock Avoidance Tool</p>
+    </header>
+
+    <main class="container">
+        
+        <!-- Section 1: Dynamic Configuration (ማስታወሻ ላይ ያለ ቁጥር 1 እና 2) -->
+        <section class="card animate-up config-section">
+            <h3 class="section-title">Step 1: Configure System Schema</h3>
+            <div class="config-controls">
+                <div class="config-field">
+                    <label>Number of Processes (n):</label>
+                    <input type="number" id="numProcesses" value="5" min="1" max="10">
+                </div>
+                <div class="config-field">
+                    <label>Number of Resources (m):</label>
+                    <input type="number" id="numResources" value="4" min="1" max="8">
+                </div>
+                <button class="btn-blue" onclick="setupTables()">Apply Settings</button>
+            </div>
+            <p class="hint">* Changing settings will reset the current input data.</p>
+        </section>
+
+        <div class="top-actions">
+            <button class="btn-cyan" onclick="loadSampleData()">Load Sample Data</button>
+            <button class="btn-gray" onclick="location.reload()">Reset All</button>
+        </div>
+
+        <!-- Section 2: Available Resources -->
+        <section class="card animate-up">
+            <h3 class="section-title">2. Available Resources</h3>
+            <div id="available-inputs" class="dynamic-input-group">
+                <!-- JS will generate inputs here (A, B, C...) -->
+            </div>
+        </section>
+
+        <!-- Section 3: Allocation & Max Matrices -->
+        <div class="matrix-container">
+            <section class="card animate-up">
+                <h3 class="section-title">3. Allocation Matrix</h3>
+                <div class="table-responsive">
+                    <table id="allocation-table">
+                        <thead id="alloc-head"></thead>
+                        <tbody id="alloc-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card animate-up">
+                <h3 class="section-title">4. Maximum Demand Matrix</h3>
+                <div class="table-responsive">
+                    <table id="max-table">
+                        <thead id="max-head"></thead>
+                        <tbody id="max-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <button id="run-btn" onclick="runSimulation()">Run Safety Algorithm</button>
+        <!-- Section 8: Resource Request Simulation (ጥያቄውን 100% ለማሟላት) -->
+<section class="card animate-up">
+    <h3 class="section-title">8. Simulate New Resource Request</h3>
+    <div class="config-controls">
+        <div class="config-field">
+            <label>Process ID (e.g., 1 for P1):</label>
+            <input type="number" id="requestPid" value="0" min="0">
+        </div>
+        <div id="request-inputs" class="dynamic-input-group">
+            <!-- JS will generate request inputs here -->
+        </div>
+        <button class="btn-cyan" onclick="handleRequest()">Check Request</button>
+    </div>
+    <div id="request-result" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
+</section>
+
+        <!-- Section 4: Execution Log (ማስታወሻ ላይ ያለ ቁጥር 4 - ቅደም ተከተል ተቀይሯል) -->
+        <section id="log-section" class="card hidden">
+            <h3 class="section-title">5. Step-by-Step Execution Log</h3>
+            <div id="simulation-log" class="log-container">
+                <!-- JS will inject logs here -->
+            </div>
+        </section>
+
+        <!-- Section 5: Analysis Result & Need Matrix -->
+        <section id="result-section" class="card hidden">
+            <h3 class="section-title">6. Analysis Summary</h3>
+            <div id="status-message"></div>
+            <div id="safe-sequence-container" class="hidden">
+                <p><strong>Safe Sequence:</strong> <span id="sequence-output"></span></p>
+            </div>
+            <div id="need-matrix-display" class="table-responsive">
+                <!-- Need matrix table goes here -->
+            </div>
+        </section>
+
+        <!-- Section 6: Chart (ማስታወሻ ላይ ያለ ቁጥር 4 - መጨረሻ ላይ እንዲሆን) -->
+        <section id="chart-section" class="card hidden">
+            <h3 class="section-title">7. Resource Utilization Visualization</h3>
+            <div class="chart-wrapper">
+                <canvas id="resourceChart"></canvas>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>OS Project | Dept. of Computer Science | Debre Tabor University</p>
+    </footer>
+
+    <!-- External JS Link -->
+    <script src="script.js"></script>
+</body>
+</html>
