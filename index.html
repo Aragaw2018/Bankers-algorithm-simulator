@@ -3,36 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Dynamic Banker's Algorithm Simulator</title>
-    <!-- External CSS Link -->
+    <title>Banker's Algorithm Simulator - DTU</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Chart.js for Visualization -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Offline Chart.js Support -->
+    <script src="chart.min.js"></script> 
 </head>
 <body>
 
     <header>
         <h1>Banker's Algorithm Simulator</h1>
-        <p>Advanced Resource Allocation & Deadlock Avoidance Tool</p>
+        <p>Deadlock Avoidance & Resource Management Tool</p>
     </header>
 
     <main class="container">
         
-        <!-- Section 1: Dynamic Configuration (ማስታወሻ ላይ ያለ ቁጥር 1 እና 2) -->
-        <section class="card animate-up config-section">
-            <h3 class="section-title">Step 1: Configure System Schema</h3>
+        <!-- Section 1: Configuration -->
+        <section class="card animate-up">
+            <h3 class="section-title">1. Configure System Schema</h3>
             <div class="config-controls">
                 <div class="config-field">
                     <label>Number of Processes (n):</label>
-                    <input type="number" id="numProcesses" value="5" min="1" max="10">
+                    <input type="number" id="numProcesses" value="5" min="1" max="15">
                 </div>
                 <div class="config-field">
                     <label>Number of Resources (m):</label>
-                    <input type="number" id="numResources" value="4" min="1" max="8">
+                    <input type="number" id="numResources" value="4" min="1" max="10">
                 </div>
                 <button class="btn-blue" onclick="setupTables()">Apply Settings</button>
             </div>
-            <p class="hint">* Changing settings will reset the current input data.</p>
         </section>
 
         <div class="top-actions">
@@ -40,77 +38,88 @@
             <button class="btn-gray" onclick="location.reload()">Reset All</button>
         </div>
 
-        <!-- Section 2: Available Resources -->
+        <!-- Section 2: Inputs -->
         <section class="card animate-up">
-            <h3 class="section-title">2. Available Resources</h3>
-            <div id="available-inputs" class="dynamic-input-group">
-                <!-- JS will generate inputs here (A, B, C...) -->
+            <h3 class="section-title">2. Resource Data Input</h3>
+            <div id="available-inputs-block">
+                <h4 style="margin-bottom:10px;">Available Resources</h4>
+                <div id="available-inputs" class="dynamic-input-group"></div>
+            </div>
+
+            <div class="matrix-container" style="margin-top:20px;">
+                <section>
+                    <h4 style="text-align:center;">Allocation Matrix</h4>
+                    <div class="table-responsive">
+                        <table id="allocation-table">
+                            <thead id="alloc-head"></thead>
+                            <tbody id="alloc-body"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section>
+                    <h4 style="text-align:center;">Maximum Demand Matrix</h4>
+                    <div class="table-responsive">
+                        <table id="max-table">
+                            <thead id="max-head"></thead>
+                            <tbody id="max-body"></tbody>
+                        </table>
+                    </div>
+                </section>
             </div>
         </section>
 
-        <!-- Section 3: Allocation & Max Matrices -->
-        <div class="matrix-container">
-            <section class="card animate-up">
-                <h3 class="section-title">3. Allocation Matrix</h3>
-                <div class="table-responsive">
-                    <table id="allocation-table">
-                        <thead id="alloc-head"></thead>
-                        <tbody id="alloc-body"></tbody>
-                    </table>
+        <!-- STEP 1: Calculate Need -->
+        <div class="main-actions">
+            <button class="btn-orange" id="calc-need-btn" onclick="calculateNeed()">Step 1: Calculate Need Matrix</button>
+        </div>
+
+        <section id="need-section" class="card hidden">
+            <h3 class="section-title">3. Calculated Need Matrix</h3>
+            <div id="need-matrix-display" class="table-responsive"></div>
+        </section>
+
+        <!-- STEP 2: Request and Safety -->
+        <section class="card animate-up">
+            <h3 class="section-title">4. Simulation Controls</h3>
+            <div class="dual-logic-container">
+                <!-- Request Simulation -->
+                <div class="logic-box">
+                    <h4 style="margin-bottom:10px;">Simulate New Request</h4>
+                    <div class="config-controls">
+                        <input type="number" id="requestPid" placeholder="P#" style="width:60px;" min="0">
+                        <div id="request-inputs" class="dynamic-input-group"></div>
+                        <button class="btn-cyan" id="check-req-btn" onclick="handleRequest()" disabled>Check Request</button>
+                    </div>
+                    <div id="request-result" style="margin-top:10px; font-weight:bold;"></div>
                 </div>
-            </section>
 
-            <section class="card animate-up">
-                <h3 class="section-title">4. Maximum Demand Matrix</h3>
-                <div class="table-responsive">
-                    <table id="max-table">
-                        <thead id="max-head"></thead>
-                        <tbody id="max-body"></tbody>
-                    </table>
+                <!-- Safety Algorithm -->
+                <div class="logic-box" style="text-align:center;">
+                    <h4 style="margin-bottom:10px;">Full Safety Check</h4>
+                    <button class="btn-green" id="run-safety-btn" onclick="runSimulation()" disabled style="width:100%;">Step 2: Run Safety Algorithm</button>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
 
-        <button id="run-btn" onclick="runSimulation()">Run Safety Algorithm</button>
-        <!-- Section 8: Resource Request Simulation (ጥያቄውን 100% ለማሟላት) -->
-<section class="card animate-up">
-    <h3 class="section-title">8. Simulate New Resource Request</h3>
-    <div class="config-controls">
-        <div class="config-field">
-            <label>Process ID (e.g., 1 for P1):</label>
-            <input type="number" id="requestPid" value="0" min="0">
-        </div>
-        <div id="request-inputs" class="dynamic-input-group">
-            <!-- JS will generate request inputs here -->
-        </div>
-        <button class="btn-cyan" onclick="handleRequest()">Check Request</button>
-    </div>
-    <div id="request-result" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
-</section>
-
-        <!-- Section 4: Execution Log (ማስታወሻ ላይ ያለ ቁጥር 4 - ቅደም ተከተል ተቀይሯል) -->
+        <!-- Section 7: Logs -->
         <section id="log-section" class="card hidden">
             <h3 class="section-title">5. Step-by-Step Execution Log</h3>
-            <div id="simulation-log" class="log-container">
-                <!-- JS will inject logs here -->
-            </div>
+            <div id="simulation-log" class="log-container"></div>
         </section>
 
-        <!-- Section 5: Analysis Result & Need Matrix -->
+        <!-- Section 8: Final Result -->
         <section id="result-section" class="card hidden">
-            <h3 class="section-title">6. Analysis Summary</h3>
+            <h3 class="section-title">6. Safety Analysis Result</h3>
             <div id="status-message"></div>
-            <div id="safe-sequence-container" class="hidden">
-                <p><strong>Safe Sequence:</strong> <span id="sequence-output"></span></p>
-            </div>
-            <div id="need-matrix-display" class="table-responsive">
-                <!-- Need matrix table goes here -->
+            <div id="safe-sequence-container" class="hidden" style="margin-top:15px; text-align:center; font-size:1.2rem;">
+                <strong>Safe Sequence:</strong> <span id="sequence-output" style="color:#10b981;"></span>
             </div>
         </section>
 
-        <!-- Section 6: Chart (ማስታወሻ ላይ ያለ ቁጥር 4 - መጨረሻ ላይ እንዲሆን) -->
+        <!-- Section 9: Chart -->
         <section id="chart-section" class="card hidden">
-            <h3 class="section-title">7. Resource Utilization Visualization</h3>
+            <h3 class="section-title">7. Resource Utilization Chart</h3>
             <div class="chart-wrapper">
                 <canvas id="resourceChart"></canvas>
             </div>
@@ -122,7 +131,6 @@
         <p>OS Project | Dept. of Computer Science | Debre Tabor University</p>
     </footer>
 
-    <!-- External JS Link -->
     <script src="script.js"></script>
 </body>
 </html>

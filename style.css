@@ -1,10 +1,15 @@
-/* --- General Reset & Typography --- */
+/* --- General Reset & Page Setup --- */
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background-color: #f0f4f8;
     margin: 0;
     padding: 0;
     color: #333;
+    line-height: 1.6;
 }
 
 header {
@@ -15,40 +20,48 @@ header {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-header h1 { margin: 0; font-size: 2.4rem; letter-spacing: 1px; }
-header p { margin: 10px 0 0; opacity: 0.8; font-size: 1.1rem; }
+header h1 {
+    margin: 0;
+    font-size: clamp(1.5rem, 5vw, 2.4rem);
+    letter-spacing: 1px;
+}
+
+header p {
+    margin: 10px 0 0;
+    opacity: 0.8;
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+}
 
 .container {
     max-width: 1100px;
-    margin: 30px auto;
-    padding: 0 20px;
+    margin: 20px auto;
+    padding: 0 15px;
 }
 
 /* --- Card Styles --- */
 .card {
-    background: white;
-    padding: 25px;
-    margin-bottom: 25px;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     border-top: 5px solid #3498db;
-    transition: transform 0.2s;
 }
 
 .section-title {
     margin-top: 0;
     color: #2c3e50;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     border-bottom: 2px solid #f1f3f5;
-    padding-bottom: 12px;
-    margin-bottom: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-/* --- Configuration Section (Step 1) --- */
+/* --- Configuration & Inputs --- */
 .config-controls {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 15px;
     align-items: flex-end;
     justify-content: center;
 }
@@ -56,56 +69,79 @@ header p { margin: 10px 0 0; opacity: 0.8; font-size: 1.1rem; }
 .config-field {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 140px;
 }
 
 .config-field label {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    margin-bottom: 8px;
-    color: #555;
+    margin-bottom: 5px;
 }
 
-/* --- Input Field Styles --- */
 input[type="number"] {
-    width: 60px;
+    width: 100%;
     padding: 10px;
     border: 2px solid #e0e6ed;
     border-radius: 8px;
     text-align: center;
     font-size: 1rem;
-    transition: border-color 0.3s, background-color 0.3s;
+    transition: border-color 0.3s;
 }
 
 input[type="number"]:focus {
     border-color: #3498db;
     outline: none;
-    background-color: #f7fbff;
 }
 
+/* --- Dynamic Input Group (Available & Request Overflow Fix) --- */
 .dynamic-input-group {
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 10px 5px;
+    width: 100%;
+    border-radius: 8px;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* --- Matrix Tables --- */
+.dynamic-input-group > div, 
+.dynamic-input-group > input {
+    flex: 0 0 auto;
+}
+
+/* --- Matrix Tables (Side-by-Side & Scrollable) --- */
 .matrix-container {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
 }
 
-.matrix-container section { flex: 1; min-width: 400px; }
+@media (min-width: 900px) {
+    .matrix-container {
+        flex-direction: row;
+    }
+    .matrix-container section {
+        flex: 1;
+        min-width: 0;
+    }
+}
 
 .table-responsive {
+    width: 100%;
     overflow-x: auto;
     margin-top: 10px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background-color: white;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 450px; 
 }
 
 th, td {
@@ -117,27 +153,27 @@ th, td {
 th {
     background-color: #f8fafc;
     color: #64748b;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
-td:first-child {
-    font-weight: bold;
-    color: #3498db;
-    background-color: #fcfdfe;
+td input {
+    width: 55px !important;
 }
 
 /* --- Buttons --- */
-.top-actions {
+.top-actions, .main-actions {
     display: flex;
-    gap: 15px;
-    margin-bottom: 25px;
-    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
 }
 
 button {
-    padding: 12px 24px;
-    font-size: 1rem;
+    padding: 12px 20px;
+    font-size: 0.95rem;
     font-weight: bold;
     border: none;
     border-radius: 8px;
@@ -146,78 +182,143 @@ button {
     box-shadow: 0 3px 6px rgba(0,0,0,0.1);
 }
 
-.btn-blue { background-color: #3498db; color: white; }
-.btn-blue:hover { background-color: #2980b9; }
+.btn-blue {
+    background-color: #3498db;
+    color: white;
+}
 
-.btn-cyan { background-color: #06b6d4; color: white; }
-.btn-cyan:hover { background-color: #0891b2; }
+.btn-cyan {
+    background-color: #06b6d4;
+    color: white;
+}
 
-.btn-gray { background-color: #94a3b8; color: white; }
-.btn-gray:hover { background-color: #64748b; }
-
-#run-btn {
+.btn-orange {
+    background-color: #f59e0b;
+    color: white;
     width: 100%;
+    max-width: 400px;
+}
+
+.btn-green {
     background-color: #10b981;
     color: white;
-    padding: 18px;
-    font-size: 1.2rem;
-    margin: 20px 0;
 }
-#run-btn:hover { background-color: #059669; transform: translateY(-2px); }
 
-/* --- Execution Log (Step 5 - terminal style) --- */
+.btn-gray {
+    background-color: #94a3b8;
+    color: white;
+}
+
+button:disabled {
+    background-color: #cbd5e1;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+button:hover:not(:disabled) {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+/* --- Simulation Controls Layout --- */
+.dual-logic-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logic-box {
+    flex: 1;
+    min-width: 300px;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 10px;
+    border: 1px dashed #3498db;
+    overflow: hidden;
+}
+
+/* --- Execution Log Output --- */
 .log-container {
     background-color: #1e1e1e;
     color: #e0e0e0;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
-    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-    max-height: 400px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    max-height: 300px;
     overflow-y: auto;
-    line-height: 1.6;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
 }
 
-.log-entry { margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 5px; }
-.log-success { color: #4ade80; font-weight: bold; }
-.log-fail { color: #fb7185; }
-.log-info { color: #60a5fa; }
+.log-entry {
+    margin-bottom: 5px;
+    border-bottom: 1px dotted #333;
+    padding-bottom: 3px;
+}
 
-/* --- Results --- */
-.hidden { display: none; }
+.log-success {
+    color: #4ade80;
+}
+
+.log-fail {
+    color: #fb7185;
+}
+
+.log-info {
+    color: #60a5fa;
+}
+
+/* --- Status & Alerts --- */
+.hidden {
+    display: none;
+}
+
 #status-message {
     padding: 15px;
     border-radius: 8px;
     text-align: center;
     font-weight: bold;
-    margin-bottom: 20px;
 }
-.success { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
-.danger { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
 
-/* --- Chart --- */
+.success {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.danger {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+/* --- Chart Layout --- */
 .chart-wrapper {
     position: relative;
-    height: 400px;
+    height: 300px;
     width: 100%;
 }
 
 /* --- Footer --- */
 footer {
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     color: #64748b;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 /* --- Animations --- */
 .animate-up {
-    animation: fadeInUp 0.6s ease-out;
+    animation: fadeInUp 0.5s ease-out;
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-
-.hint { font-size: 0.8rem; color: #94a3b8; margin-top: 10px; text-align: center; }
